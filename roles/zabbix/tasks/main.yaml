@@ -1,0 +1,16 @@
+---
+#
+# Configuring zabbix indicies
+#
+
+
+- name: Create Elastic mapping
+  script: ../scripts/create_elastic_mapping.sh '{{ ansible_hostname }}:9200'
+
+- name: Create Elastic template
+  script: ../scripts/create_elastic_template.sh '{{ ansible_hostname }}:9200'
+  tags: template
+
+- name: Create Elastic pipeline
+  script: ../scripts/create_elastic_pipeline.sh '{{ ansible_hostname }}:9200'
+  tags: pipeline

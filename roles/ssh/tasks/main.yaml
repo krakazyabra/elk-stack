@@ -1,0 +1,24 @@
+---
+#
+# Installing and configuring ssh
+#
+
+# Installing ssh
+
+- name: Install ssh
+  apt:
+    name: openssh-server
+  tags: ssh
+
+- name: Config ssh
+  lineinfile:
+   destfile: /etc/ssh/sshd_config
+   regexp: 'PermitRootLogin prohibit-password'
+   line: 'PermitRootLogin yes'
+  tags: ssh
+
+- name: restart ssh
+  service:
+    name: ssh
+    state: restarted
+  tags: ssh

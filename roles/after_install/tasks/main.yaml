@@ -1,0 +1,39 @@
+---
+#
+# Fresh install config
+#
+
+- name: Update the system
+  raw: apt-get update -y ; apt-get upgrade -y
+
+- name: Install Python
+  raw: apt install -y python-minimal python-simplejson
+
+- name: Install ssh
+  apt: 
+   name: openssh-server
+
+- name: Config ssh
+  lineinfile:
+   destfile: /etc/ssh/sshd_config
+   regexp: 'PermitRootLogin prohibit-password'
+   line: 'PermitRootLogin yes'
+
+- name: Restart ssh
+  service: 
+   name: ssh
+   state: restarted
+
+- name: install curl
+  apt:
+   name: curl
+  tags: curl
+
+- name: add hosts to /etc/hosts
+  lineinfile: 
+   destfile: /etc/hosts
+   regexp: '.*{{item}}$'
+   line: '{{hostvars[item].ansible_default_ipv4.address}} {{item}}'
+   state: present
+  tags: hosts
+  with_items: '{{groups.all}}'

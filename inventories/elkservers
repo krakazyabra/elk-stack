@@ -1,0 +1,10 @@
+[master]
+elk-1
+
+[data]
+elk-2
+elk-3
+
+[elk:children]
+master
+data

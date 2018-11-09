@@ -1,0 +1,30 @@
+---
+#
+# Playbook to install the ELK stack
+#
+- hosts: all
+  remote_user: root
+  become: yes
+  become_user: root
+  gather_facts: yes
+  vars: 
+    cluster_name: elk-cluster
+  roles: 
+
+  - role: after_install
+    tags: after_install
+
+  - role: java
+    tags: java
+
+  - role: elasticsearch
+    tags: elasticsearch
+
+- hosts: master
+  roles: 
+
+  - role: zabbix
+    tags: zabbix
+
+  - role: kibana
+    tags: kibana
