@@ -22,9 +22,8 @@
 
 - hosts: master
   roles: 
-
-  - role: zabbix
-    tags: zabbix
-
   - role: kibana
     tags: kibana
+### DELETE IF YOU DON'T NEED ZABBIX MAPPING ###    
+  - role: zabbix
+    tags: zabbix
